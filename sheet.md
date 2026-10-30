@@ -14,7 +14,10 @@ Full page: [README.md](README.md). Setup and common problems: [SETUP.md](SETUP.m
 1. Idle timeout not set yet on this account? First: [SETUP.md, step 1](SETUP.md#step-1---let-the-codespace-wait-for-you).
 2. Open the Codespace: **https://codespaces.new/Youth-AI-Lab/yal-workshop-tools** → **Create codespace**.
 3. Terminal 1: `workshop-login`, paste the key once, Enter → you see `Key OK`.
-4. Drag `my-work.zip` into the file list. Terminal 1: `workshop-start 4 --from my-work.zip`.
+4. Drag `my-work.zip` into the file list (the newest: maybe `my-work (1).zip`, then its exact name
+   between quotes). Terminal 1: `workshop-start 4 --from my-work.zip` → check the `saved on` date
+   (no save: `workshop-start 4`).
+5. First `workshop D`: **down arrow** → `Yes, I trust this folder` → Enter (closed? type it again).
 
 ## 2. Our tool (20 min)
 
@@ -47,8 +50,11 @@ Full page: [README.md](README.md). Setup and common problems: [SETUP.md](SETUP.m
 
 ## 5. Closing (15 min)
 
-1. `replay D`, then `score D 8 11 12`. Compare with column C.
-2. `workshop-save` → right-click on `my-work.zip` → **Download...**. Bring it to [workshop 5](https://github.com/Youth-AI-Lab/yal-workshop-wiki).
+1. Predict: which of 8, 11, 12 go up from C to D? `replay D`, then `score D 8 11 12` (no
+   question 12: `score D 8 11`). No C score for 8? `score C 8`. Compare the rows with column C, not
+   the Total (no save: with a neighbouring pair).
+2. `workshop-save` → right-click on `my-work.zip` → **Download...**. Bring it to [workshop 5](https://github.com/Youth-AI-Lab/yal-workshop-wiki). If your
+   computer already has one, the new one may be called `my-work (1).zip`: bring the newest.
 3. Exit card: three answers, alone.
 
 **Never make up a level**: only what the official source says, on the day. **Leave a

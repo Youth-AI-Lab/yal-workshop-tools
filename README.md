@@ -102,8 +102,10 @@ All of these are in your Codespace, in the file list on the left:
 - `mcp/fire-danger.json`: the data of our tool, one entry per territory. You fill it in today.
 - `mcp/fire_danger_server.py`: the program of our tool, about 160 lines of Python.
 - `.mcp.json`: the list of tools that mode D plugs in, and how each one starts.
-- `test-questions.md` and `scores.md`: the test set and your score sheet.
-- `SETUP.md`: setup, commands and common problems.
+- `test-questions.md` and `scores.md`: the test set and your score sheet. How to score (0, 1 or
+  2) is in `test-questions.md`, "How to score".
+- `SETUP.md`: setup, commands and common problems. The gauge (the line `… / 200k` above the input
+  box) is explained in [step 4](SETUP.md#step-4---your-first-conversation).
 
 ---
 
@@ -127,14 +129,18 @@ second terminal.
 
 ### Step 2 - Bring back your work
 
-1. **Drag `my-work.zip`** from your computer into the file list of the Codespace.
+1. **Drag `my-work.zip`** from your computer into the file list of the Codespace. If you
+   downloaded it more than once, your browser may have named the newest one `my-work (1).zip`:
+   drag that one, and type its exact name between quotes, for example
+   `workshop-start 4 --from "my-work (1).zip"`.
 2. In your first terminal, type:
 
    ```bash
    workshop-start 4 --from my-work.zip
    ```
 
-   You should see your files restored, then:
+   You should see `Restored from my-work.zip (saved on …)`: check that this date is the end of
+   workshop 3. Then the list of the files it restored, and:
 
    ```
    Prepared for this workshop:
@@ -148,6 +154,11 @@ second terminal.
    Without a save, type `workshop-start 4`. The "Prepared" lines then say that `AGENTS.md` is now
    a copy of the Feurisson example, and that the document of Benevento was added to the corpus,
    for question 11.
+
+> ℹ️ **Note.** **The first time you type `workshop D`** in this Codespace, Claude Code asks again
+> whether you trust the folder. The choice proposed is `No, exit`: press the **down arrow** to choose
+> `Yes, I trust this folder`, then **Enter**. If Claude Code closed, type `workshop D` again. More in
+> [SETUP.md, step 4](SETUP.md#step-4---your-first-conversation).
 
 > 💡 **Tip.** **Checkpoint**: `Key OK`, then `Ready for workshop 4`.
 
@@ -470,7 +481,8 @@ cannot read, that can write files and send messages, for a chatbot used by young
 
 ### Step 1 - Replay and score column D
 
-1. In your first terminal, replay the test set in mode D:
+1. **Predict** on paper: which of questions 8, 11 and 12 will go up from column C to column D?
+2. In your first terminal, replay the test set in mode D:
 
    ```bash
    replay D
@@ -478,8 +490,10 @@ cannot read, that can write files and send messages, for a chatbot used by young
 
    Under each answer, the line `What the model did:` lists what it read and searched, and the tools
    it called, for example `called the MCP tool fire_danger`. In our test on 2026-10-30, with the 11
-   questions of the kit (no question 12): 1 min 54 and $0.24.
-2. Score only the three questions of today, with the help of the judge:
+   questions of the kit (no question 12): 1 min 54 and $0.24. Other ways to pay for the model:
+   [OpenCode guide, five ways to pay for the model](https://github.com/Youth-AI-Lab/yal-opencode-guide#before-you-start-five-ways-to-pay-for-the-model).
+3. Score only the three questions of today, with the help of the judge (no question 12:
+   `score D 8 11`):
 
    ```bash
    score D 8 11 12
@@ -487,7 +501,11 @@ cannot read, that can write files and send messages, for a chatbot used by young
 
    For question 8: when the entry of Antwerp is not `"live"`, an answer that says there is no
    official level today, with the sentence of the source, is right.
-3. **Compare column D** with column C, for questions 8, 11 and 12. Which question changed, and why?
+4. **Compare column D** with column C in `scores.md`, for questions 8, 11 and 12, and with your
+   prediction. Which question changed, and why? Today only some questions are scored, so **the
+   Total row means nothing here**: read the rows. If column C has no score for question 8, type
+   `score C 8`: your answers of workshop 3 are still in `answers/`. Without a save, there is no
+   column C: compare with a neighbouring pair.
 
 ### Step 2 - Save your work, fill in the exit card
 
@@ -496,6 +514,8 @@ cannot read, that can write files and send messages, for a chatbot used by young
 
    ![1: my-work.zip in the file list. 2: the item Download... of the menu that opens with a right-click.](images/download-zip.png)
 
+   If your computer already has a `my-work.zip`, the new one may be called `my-work (1).zip`:
+   bring the newest.
 2. Answer on the card of the facilitator, alone, in a few words:
    1. Why can only a tool give today's fire danger level?
    2. What can a server do in your Codespace, and how do you check it before you plug it in?
