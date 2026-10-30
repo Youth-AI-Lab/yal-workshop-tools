@@ -207,8 +207,12 @@ it read.
    Press **Ctrl+O** to see each call: the line `● fire-danger - fire_danger (MCP)(territory:
    "Antwerp")` shows what the model asked, and the block under it shows what the tool sent back.
    Press **Ctrl+O** again to come back.
+
+   ![The detailed view of the conversation after Ctrl+O. 1: the line fire-danger - fire_danger (MCP)(territory: "Antwerp"), what the model asked. 2: what the tool sent back, with "level": null and why_no_level: the file is dated YYYY-MM-DD, not today. 3: Showing detailed transcript · ctrl+o to toggle.](images/mcp-call-expanded.png)
+
 3. Read what came back. The file is not dated today, so the tool gives no level
-   (`"level": null`), and says why, in a field called `why_no_level`:
+   (`"level": null`), and says why, in a field called `why_no_level`. On screen, the tool sends back
+   one long text: each quote has a `\` before it, and `\n` marks a new line. Here it is without them:
 
    ```
    "why_no_level": "The file is dated YYYY-MM-DD, not today (…). Nobody has filled in today's level yet."
@@ -246,7 +250,14 @@ The tool reads `mcp/fire-danger.json`. A person fills it in, on the day, from th
 > ℹ️ **Note.** **The tool gives a level only when the date is today's and the status is `"live"`.**
 > With another status, it gives no level, and says why, with the sentence of the source. An old
 > file never passes for today's level. If the chatbot says that `fire-danger.json is malformed`, a
-> quote or a comma is missing: look for the red underline in the editor, fix it and save.
+> quote or a comma is missing. The file name turns red, with the number of problems next to it.
+> Look for the red wavy line in the editor and put the mouse on it: VS Code says what is missing
+> (here: `Expected comma`). A missing comma is usually at the end of the line just above it. Fix
+> it and save.
+
+![VS Code with mcp/fire-danger.json open, a comma missing at the end of line 40. 1: the file name fire-danger.json in red in the file list, with 1, M on the right. 2: the tab of the file, in red too. 3: the red wavy underline under "scale", at the start of line 41.](images/json-error.png)
+
+![The message that VS Code shows when the mouse is on the red wavy line: Expected comma.](images/json-error-hover.png)
 
 5. Leave with **Ctrl+C twice**.
 
@@ -409,6 +420,9 @@ or ask someone who can read the code.
    the model reads. Find the line `DATA = …`: the file these two tools read. The line under it,
    `RECORDED = …`, is for a third tool (a past day), which stays off unless the facilitator turns it
    on.
+
+   ![mcp/fire_danger_server.py open in VS Code, the same file shown twice: at the top, the start of the file; at the bottom, the two tools. 1: the two lines @mcp.tool(), lines 92 and 102. 2: under each one, the text between three quotes, the description that the model reads. 3: at the top, the lines DATA = Path(__file__).with_name("fire-danger.json") and RECORDED = Path(__file__).with_name("fire-danger.recorded.json").](images/server-code.png)
+
 3. Answer the five questions above for this server. Does it call any address on the internet?
 
 #### Step 2 - Watch the facilitator's example
@@ -476,6 +490,9 @@ cannot read, that can write files and send messages, for a chatbot used by young
 
 1. Type `workshop-save`, then right-click on `my-work.zip` → **Download...**. It holds your
    `fire-danger.json` and everything before. Bring it to workshop 5.
+
+   ![1: my-work.zip in the file list. 2: the item Download... of the menu that opens with a right-click.](images/download-zip.png)
+
 2. Answer on the card of the facilitator, alone, in a few words:
    1. Why can only a tool give today's fire danger level?
    2. What can a server do in your Codespace, and how do you check it before you plug it in?
@@ -492,8 +509,11 @@ The common problems (key, Codespace, terminal) are in the
 [Troubleshooting of SETUP.md](SETUP.md#troubleshooting).
 
 **`fire-danger.json is malformed (Expecting ',' delimiter: line … column …). Fix it and try again.`** -
-A comma or a quote is missing in `mcp/fire-danger.json`. Go to the line given in the message, look
-for the red underline in the editor, fix it, and save. You don't need to restart the conversation.
+A comma or a quote is missing in `mcp/fire-danger.json`. Go to the line given in the message and
+look for the red underline in the editor. A missing comma is usually at the end of the line just
+above it. Fix it, and save. You don't need to restart the conversation.
+
+![The detailed view after Ctrl+O. The tool fire_danger sent back: fire-danger.json is malformed (Expecting ',' delimiter: line 41 column 7 (char 3315)). Fix it and try again.](images/mcp-malformed.png)
 
 **The tool says "The file is dated …, not today".** - Write today's date in `"date"`, at the top of
 the file, in the form year-month-day, and save.
