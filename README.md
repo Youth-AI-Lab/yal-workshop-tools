@@ -5,6 +5,7 @@
 - **Project:** Youth AI Lab (Erasmus+), with five partners: L.A.B. (Aix-en-Provence, France),
   UAB (Barcelona, Spain), Perlatecnica (Naples, Italy), Digitale Wolven (Antwerp, Belgium),
   CSC Vent des Îles (La Rochelle, France).
+- **The series:** [the five workshops](https://github.com/Youth-AI-Lab/yal-workshop-kit#the-series)
 - **Need help?**
   - Raise your hand and ask the facilitator.
   - If something breaks, don't panic: your files stay in the Codespace.
@@ -479,6 +480,9 @@ cannot read, that can write files and send messages, for a chatbot used by young
    1. Why can only a tool give today's fire danger level?
    2. What can a server do in your Codespace, and how do you check it before you plug it in?
    3. What is the difference between a weather forecast and the official fire danger level?
+
+**Next:** [Workshop 5 - Organise what it knows](https://github.com/Youth-AI-Lab/yal-workshop-wiki). Open its own Codespace from that page, and
+bring `my-work.zip`.
 
 ---
 

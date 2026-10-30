@@ -47,7 +47,7 @@ Full page: [README.md](README.md). Setup and common problems: [SETUP.md](SETUP.m
 ## 5. Closing (15 min)
 
 1. `replay D`, then `score D 8 11 12`. Compare with column C.
-2. `workshop-save` → right-click on `my-work.zip` → **Download...**. Bring it to workshop 5.
+2. `workshop-save` → right-click on `my-work.zip` → **Download...**. Bring it to [workshop 5](https://github.com/Youth-AI-Lab/yal-workshop-wiki).
 3. Exit card: three answers, alone.
 
 **Never make up a level**: only what the official source says, on the day. **Leave a
