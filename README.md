@@ -473,7 +473,7 @@ cannot read, that can write files and send messages, for a chatbot used by young
 
 ### Step 2 - Save your work, fill in the exit card
 
-1. Type `workshop-save`, then right-click on `my-work.zip` → **Download**. It holds your
+1. Type `workshop-save`, then right-click on `my-work.zip` → **Download...**. It holds your
    `fire-danger.json` and everything before. Bring it to workshop 5.
 2. Answer on the card of the facilitator, alone, in a few words:
    1. Why can only a tool give today's fire danger level?
