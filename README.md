@@ -240,7 +240,7 @@ it read.
 
 The tool reads `mcp/fire-danger.json`. A person fills it in, on the day, from the official source.
 
-1. Open `mcp/fire-danger.json`. Find the entry `"Antwerp — Flanders, Belgium"`. Its `source` gives
+1. Open `mcp/fire-danger.json`. Find the entry `"Antwerp - Flanders, Belgium"`. Its `source` gives
    the official page: open it in a browser tab, and read what it says **today**, in the province
    of Antwerp.
 2. In the file, write today's date in `"date"`, at the top, in the form year-month-day, for example
