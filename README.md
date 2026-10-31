@@ -1,6 +1,6 @@
 # Workshop 4 - Plug in tools
 
-### Youth AI Lab (Erasmus+) - series "Customising a chatbot", workshop 4 of 5
+### Youth AI Lab (Erasmus+) - series "Build your own chatbot", workshop 4 of 5
 
 - **Project:** Youth AI Lab (Erasmus+), with five partners: L.A.B. (Aix-en-Provence, France),
   UAB (Barcelona, Spain), Perlatecnica (Naples, Italy), Digitale Wolven (Antwerp, Belgium),
