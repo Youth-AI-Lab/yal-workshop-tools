@@ -418,7 +418,9 @@ WORKSHOP_WEATHER=1 workshop D
 
    Look at the gauge now, before the next question: it counts the whole conversation, so it goes up
    with each message. In our test, the first answer of a new conversation used about 14,000 tokens
-   with the weather plugged in, against 8,000 without it. The descriptions of the tools enter the
+   for this weather question, and about 8,000 for question 8 without the weather. These are two
+   different questions, so the gap holds more than the descriptions of the tools: the forecast that
+   came back counts too, and we did not measure each part. The descriptions of the tools enter the
    context with every message, even when the model does not call them. So plug in only the tools
    your chatbot needs.
 3. Now ask: `Given the weather, what is the fire danger level today in La Rochelle?` Does the model
