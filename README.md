@@ -40,8 +40,8 @@
 
 Until now, the chatbot only read what was already in the Codespace: its instructions, its
 documents, its skills. Some knowledge changes every day, such as the fire danger level, and no
-document can hold it. Today, you plug **tools** into the chatbot: small programs that it can call
-while it answers, and that bring back what they find. The question of the day is:
+document can hold it. Today, you plug **tools** into the chatbot: actions that it can call while it
+answers, and that bring back what they find. The question of the day is:
 
 > **What happens when the chatbot acts outside?**
 
@@ -49,7 +49,7 @@ while it answers, and that bring back what they find. The question of the day is
 |---|---|---|---|
 | **Understand** | 2 | Explain why only a tool can give today's level, and read a tool call and what it brought back. | `D` |
 | **Apply** | 2, 4 | Fill in the entry of a territory from its official source, so that the tool gives it, with its source. | file |
-| **Analyse** | 3 | Compare three tools: what each one reads, what leaves the Codespace, what it costs in the context. | `D` |
+| **Analyse** | 3 | Compare three servers: what each one reads, what leaves the Codespace, what it costs in the context. | `D` |
 | **Evaluate** | 4 | Decide whether to plug in a tool, from what it can do with your rights and what it sends away. | - |
 
 All session long, you go on testing your chatbot with the same questions: today, column **D**,
@@ -61,9 +61,11 @@ A document says what was true the day it was written. The level of fire danger i
 day by an authority, and the chatbot cannot guess it. A **tool** fills this gap: the model asks it a
 question, the tool answers with a fact, and the model uses it in its answer.
 
-This power has a price. A tool is a program that runs **in your Codespace, with your rights**. It
-can read files, and some tools send what the model asks for (a place, a word) to a service on the internet. So
-before you plug one in, you read what it does, like an app on your phone before you install it.
+This power has a price. Behind a tool is a program that runs **in your Codespace, with your
+rights**: it can do what you can do there, such as open a file, change it, or read your key. The
+rules of `AGENTS.md` speak to the model, not to the program, so they do not stop it. Some tools also
+send what the model asks for (a place, a word) to a service on the internet. So before you plug one
+in, you read what it does, like an app on your phone before you install it.
 
 Last, a tool is only as good as its data. Our fire danger tool reads a file that **a person** fills
 in from the official source, on the day. If nobody has filled it in, the tool says so, and gives
@@ -102,7 +104,7 @@ All of these are in your Codespace, in the file list on the left:
 
 - `mcp/fire-danger.json`: the data of our tool, one entry per territory. You fill it in today.
 - `mcp/fire_danger_server.py`: the program of our tool, about 160 lines of Python.
-- `.mcp.json`: the list of tools that mode D plugs in, and how each one starts.
+- `.mcp.json`: the list of servers that mode D plugs in, and how each one starts.
 - `test-questions.md` and `scores.md`: the test set and your score sheet. How to score (0, 1 or
   2) is in `test-questions.md`, "How to score".
 - `SETUP.md`: setup, commands and common problems. The gauge (the line `… / 200k` above the input
@@ -121,9 +123,12 @@ Codespace wait for you, open it, save your key with `workshop-login`, check `Key
 second terminal.
 
 > 💡 **If you use OpenCode.** Same commands, after `workshop-login --engine opencode`. Mode D gives
-> OpenCode the same tools. It asks you before every shell command and every file it writes, but
-> not before it calls one of these tools. With an OpenRouter key (`sk-or-`), the judge of `score`
-> does not work: it needs an Anthropic key, so you score alone.
+> OpenCode the same tools. It asks you before every command it wants to run in the terminal and
+> every file it writes, but not before it calls one of these tools. With an OpenRouter key
+> (`sk-or-`), the conversation goes through OpenRouter to the company of the model you chose, which
+> may not be Anthropic. The judge of `score` then does not work: it needs an Anthropic key, so you
+> score alone. Other ways to pay for the model:
+> [OpenCode guide, five ways to pay for the model](https://github.com/Youth-AI-Lab/yal-opencode-guide#before-you-start-five-ways-to-pay-for-the-model).
 
 > ℹ️ **No Codespace?** The same repository opens on your own computer, with Docker and VS Code: see
 > the [dev containers guide](https://github.com/Youth-AI-Lab/yal-devcontainer-guide).
@@ -172,12 +177,17 @@ entry of Antwerp from its official source, and ask again.
 
 ### What you will discover
 
-- **A tool** is a small program that the model can call while it answers. It brings back a fact,
-  here the level of the day, from a file.
-- **MCP** (Model Context Protocol) is the common way to plug such a program into a chatbot: one
-  tool program, called a **server**, can be plugged into Claude Code, OpenCode, or another chatbot.
+- **A tool** is an action that the model can call while it answers. It brings back a fact, here
+  the level of the day, from a file. In workshop 3 you saw tools that are part of Claude Code: search
+  for a word, read a file. Today's tools are added to it.
+- **A server** is the small program that offers these tools. Despite its name, it is not a big
+  computer somewhere: here, it runs in your Codespace. One server can offer several tools:
+  `fire-danger` offers two.
+- **MCP** (Model Context Protocol) is the common way to plug a server into a chatbot: the same
+  server can be plugged into Claude Code, OpenCode, or another program that runs a chatbot.
 - **The model decides** when to call a tool, from its description. It does not ask you first: the
-  workshop allows the tools of mode D.
+  tools plugged into mode D only read, and the people who prepared the workshop allowed them in
+  advance.
 
 ### What the model reads in mode D
 
@@ -192,9 +202,22 @@ flowchart LR
   M --> R["Answer"]
 ```
 
+**What happens during a tool call.** The model does not run in your Codespace: it runs at
+Anthropic. Claude Code, the program in your terminal, sends it your question and the descriptions
+of the tools. When the model wants a tool, it answers with the name of the tool and what to ask it.
+Claude Code passes this to the server, in your Codespace, then sends what came back to the model,
+which writes its answer.
+
 **Key insight:** mode D is mode C plus tools. The model now has two ways to find an answer: read
 the documents, or call a tool. What a tool sends back enters the context exactly like a document
 it read.
+
+> ℹ️ **Note.** **Our tool reads a file, so why is it not one more document?** Because it checks the
+> file each time the model calls it. It compares the date of the file with today's date. If the date
+> is not today's, or if nobody wrote that the source shows a level today, it gives no level and says
+> why. A document cannot check anything: the model would read an old level as if it were today's.
+> Here a person fills in the file. Other tools ask a service by themselves: you will see one in
+> Part 3.
 
 ### What to do
 
@@ -210,6 +233,8 @@ it read.
      ❯ ✔ fire-danger   2 tools
        ✔ time          2 tools
    ```
+
+   The ✔ means that the server has started, even before your first question.
 
 3. Press Enter on `fire-danger`, then on `1. View tools`: its two tools are `territories` (the
    list of territories it knows) and `fire_danger` (the level of one territory today). Press
@@ -233,9 +258,17 @@ it read.
    "why_no_level": "The file is dated YYYY-MM-DD, not today (…). Nobody has filled in today's level yet."
    ```
 
+   `YYYY-MM-DD` is what the file holds as long as nobody has written a date in it.
+
    What does the model do with it? In our test on 2026-10-30, it called `fire_danger`, then
    `territories` (the list of territories), without asking you, in about 6 seconds, for about
    $0.03.
+
+   Now read the answer of the chatbot. Does it give a level, or does it say that there is none
+   today? Does it name the source? The model cannot know the level by itself, and here the tool
+   gave it none. The description of the tool also tells the model never to guess (you will read it
+   in Part 4). An answer that says "no level today" is a visible failure, as in workshop 3: an
+   invented answer is worse than "I don't know".
 
 #### Step 3 - Fill in Antwerp from its official source
 
@@ -253,26 +286,21 @@ The tool reads `mcp/fire-danger.json`. A person fills it in, on the day, from th
    - only if the status is `"live"`: `"level"`, the level of the day, and the lines of `"advice"`,
      copied as they are.
 
-   Keep the quotes: each value between quotes, a comma between two lines, and none after the last.
-   Save (`Ctrl+S`).
+   Most lines have a name on the left and a value on the right. Change only the value: replace the
+   whole text `TO BE COMPLETED…` between the quotes. A program reads this file, and one missing
+   comma stops it, so keep the quotes, a comma between two lines, and none after the last. Leave
+   the lines you do not need as they are: the tool does not send a line that still says
+   `TO BE COMPLETED`. Save (`Ctrl+S`).
 
 > ⚠️ **Important.** **Never make up a level.** Write only what the official source says, on the day.
 > If the page shows no level, write the status and its sentence, never a level of your own.
 
 4. In the same conversation, ask question 8 again. The tool reads the file at each call: there is
-   nothing to restart. Press **Ctrl+O** again: what changed in what the tool sent back?
+   nothing to restart. Press **Ctrl+O** again: what changed in what the tool sent back? Look at
+   `status`, `level`, `source_says` and `why_no_level`.
 
-> ℹ️ **Note.** **The tool gives a level only when the date is today's and the status is `"live"`.**
-> With another status, it gives no level, and says why, with the sentence of the source. An old
-> file never passes for today's level. If the chatbot says that `fire-danger.json is malformed`, a
-> quote or a comma is missing. The file name turns red, with the number of problems next to it.
-> Look for the red wavy line in the editor and put the mouse on it: VS Code says what is missing
-> (here: `Expected comma`). A missing comma is usually at the end of the line just above it. Fix
-> it and save.
-
-![VS Code with mcp/fire-danger.json open, a comma missing at the end of line 40. 1: the file name fire-danger.json in red in the file list, with 1, M on the right. 2: the tab of the file, in red too. 3: the red wavy underline under "scale", at the start of line 41.](images/json-error.png)
-
-![The message that VS Code shows when the mouse is on the red wavy line: Expected comma.](images/json-error-hover.png)
+> ℹ️ **Note.** If the chatbot says that `fire-danger.json is malformed`, a quote or a comma is
+> missing: see the first entry of [Troubleshooting](#troubleshooting).
 
 5. Leave with **Ctrl+C twice**.
 
@@ -291,6 +319,9 @@ filled in. **Who is responsible for the level that the chatbot gives?**
 **Goal**: use two servers that other people wrote, read how they are plugged in, and see what each
 one sends away and what it costs in the context.
 
+Many servers already exist, for a calendar, a database, a website. Using one saves work, but you
+then run, in your Codespace, a program that someone else wrote.
+
 ### What you will discover
 
 - **Time**: the official example server of MCP. It gives the date and the time in a time zone. It
@@ -306,7 +337,7 @@ one sends away and what it costs in the context.
 |---|---|---|---|
 | `fire-danger` | the workshop | the file `mcp/fire-danger.json` | nothing |
 | `time` | the MCP project (official example) | the clock of the Codespace | nothing |
-| `open-meteo` | a volunteer (open source) | the Open-Meteo service, on the internet | the place and the coordinates the model asks about |
+| `open-meteo` | a volunteer (its code is public) | the Open-Meteo service, on the internet | the place and the coordinates the model asks about |
 
 And for all three: what the tool sends back enters the context, so it goes to the company of the
 model (Anthropic) with your question, like everything in the conversation.
@@ -319,10 +350,12 @@ do, and what it sends away, is written in its code and in how it is started, not
 #### Step 1 - Read how the tools are plugged in
 
 1. Open `.mcp.json`. It lists the servers of mode D: for each one, the program that starts it
-   (`command`) and its options (`args`).
+   (`command`) and its options (`args`). The paths that start with `/opt/workshop/` are programs
+   already installed in your Codespace.
 2. Find the line of `time`. What option does it get? (`--local-timezone Europe/Paris`: the time
    zone it uses when the model does not name one. In Step 2, watch which time zone the model asks
-   for.)
+   for.) An option changes what the program does: this is the "how it is started" of the Key
+   insight above.
 
 #### Step 2 - A question that needs the time of day
 
@@ -345,13 +378,23 @@ Barcelona. No document holds it.
 
 4. Compare the two answers. In our test on 2026-10-30, the model did not call `time` the first time:
    it found the hours of the update in the summary, then said it could not tell. The second time, it
-   called `time` (`get_current_time`, time zone `Europe/Madrid`), and answered with the time in
-   Barcelona. The date, the model already had: Claude Code gives it, and so does our fire danger tool.
+   called `time` (`get_current_time`), and answered with the time in Barcelona. It chose the time
+   zone `Europe/Madrid` itself, the one that covers Barcelona, not the `Europe/Paris` of the option.
+   The date, the model already had: Claude Code gives it, and so does our fire danger tool.
+
+   **What this means.** A tool that is plugged in is not always used. The model chooses from your
+   question and from the descriptions of the tools. In our test, it did not use the clock until the
+   question named the tool, and the description of `time` entered the context all the same. So test
+   a tool with the questions people will really ask.
 5. Leave with **Ctrl+C twice**.
 
 #### Step 3 - Plug in the weather
 
-The weather tool is not in mode D by default. To plug it in for one conversation, type:
+The weather tool is not in mode D by default. It differs from the first two servers in two ways:
+what the model asks it leaves the Codespace, and its descriptions take much more room in the
+context. It is listed in a second file, `.mcp.weather.json`, not in `.mcp.json`. To plug it in for
+one conversation, type the command below: `WORKSHOP_WEATHER=1` in front of `workshop D` is a setting
+for this start only.
 
 ```bash
 WORKSHOP_WEATHER=1 workshop D
@@ -359,7 +402,8 @@ WORKSHOP_WEATHER=1 workshop D
 
 1. Type `/mcp`: you should see a third server, `✔ open-meteo   17 tools`. The workshop shows the
    model **only 2 of them** (the forecast, and the search of a place by its name): the
-   descriptions of the 17 tools take about 112,000 characters, 2 of them about 12,000. Press **Esc**.
+   descriptions of the 17 tools take about 112,000 characters, 2 of them about 12,000 (on average,
+   4 characters of English text make a token). Press **Esc**.
    The workshop allows these two tools too: the model calls them without asking you, and what it
    sends to them leaves the Codespace.
 2. Ask:
@@ -371,14 +415,17 @@ WORKSHOP_WEATHER=1 workshop D
    Press **Ctrl+O**: what did the model send to Open-Meteo? In our test on 2026-10-30, it sent the
    coordinates of La Rochelle (46.16, -1.15), which it knew without searching, and the answer came
    in about 5 seconds.
+
+   Look at the gauge now, before the next question: it counts the whole conversation, so it goes up
+   with each message. In our test, the first answer of a new conversation used about 14,000 tokens
+   with the weather plugged in, against 8,000 without it. The descriptions of the tools enter the
+   context with every message, even when the model does not call them. So plug in only the tools
+   your chatbot needs.
 3. Now ask: `Given the weather, what is the fire danger level today in La Rochelle?` Does the model
    give a weather forecast as if it were the official level? In our test, it did not: it called the
    fire danger tool, and said that the weather does not give the official level. A test of one
    question proves little: try it yourself.
-4. Look at the gauge. In our test, with the weather plugged in, each answer used about 14,000 tokens
-   of context, against 8,000 without it. The descriptions of the tools enter the context with every
-   message, even when the model does not call them.
-5. Leave with **Ctrl+C twice**.
+4. Leave with **Ctrl+C twice**.
 
 > ℹ️ **Note.** The forecasts come from [Open-Meteo](https://open-meteo.com). Its free service is for
 > non-commercial use, and its data is under the CC BY 4.0 licence: a chatbot that shows it must give
@@ -409,7 +456,7 @@ territory in the tool's file, with its source.
 - **A server starts with your rights.** It can read the files of the Codespace, and some send data
   to a service on the internet. The model decides when to call it, but the program decides what it does.
 - **What a tool sends back enters the context.** A web page or an answer from a service can carry
-  instructions, like a document. The facilitator shows an example.
+  instructions that nobody wrote in your `AGENTS.md`. The facilitator shows an example.
 - **Your source is part of the data.** The entry of your territory says where the level comes from,
   so that anyone can check it.
 
@@ -423,6 +470,13 @@ territory in the tool's file, with its source.
 | Does it write or delete anything? | its list of tools: any tool that writes, deletes or sends a message |
 | Is its version fixed? | `.mcp.json`, and how it was installed (here: in the image of the Codespace, with fixed versions) |
 
+> ℹ️ **Note.** **Some words of this table.** GitHub, PyPI and npm are sites where people publish
+> programs. The page of a program shows who wrote it and its last version (a **release**).
+> **Maintained** means that someone still corrects it. A **fixed version** means that your chatbot
+> keeps the version you checked: if a program updates by itself, the program you read today can do
+> something else tomorrow. The **image of the Codespace** is the ready-made set of programs that each
+> Codespace of this workshop starts from.
+
 **Key insight:** a description says what a tool is for. Only its code says what it does. Read both,
 or ask someone who can read the code.
 
@@ -431,19 +485,38 @@ or ask someone who can read the code.
 #### Step 1 - Read our tool
 
 1. Open `mcp/fire_danger_server.py`. You don't need to read Python to see the main facts.
-2. Find the two functions marked `@mcp.tool()`: their text between `"""` is the **description** that
-   the model reads. Find the line `DATA = …`: the file these two tools read. The line under it,
-   `RECORDED = …`, is for a third tool (a past day), which stays off unless the facilitator turns it
-   on.
+2. Find the two blocks that start with `@mcp.tool()`: their text between `"""` is the
+   **description** that the model reads. Find the line `DATA = …`: the file these two tools read.
+   The line under it, `RECORDED = …`, is for a third tool (a past day), which stays off unless the
+   facilitator turns it on.
 
    ![mcp/fire_danger_server.py open in VS Code, the same file shown twice: at the top, the start of the file; at the bottom, the two tools. 1: the two lines @mcp.tool(), lines 92 and 102. 2: under each one, the text between three quotes, the description that the model reads. 3: at the top, the lines DATA = Path(__file__).with_name("fire-danger.json") and RECORDED = Path(__file__).with_name("fire-danger.recorded.json").](images/server-code.png)
 
-3. Answer the five questions above for this server. Does it call any address on the internet?
+3. Answer the five questions above for this server. For "What does it send away?", press
+   **Ctrl+F** in the editor and search for `http`: an address on the internet starts with these
+   letters. Here the search finds nothing. That is a good sign, not a proof: for a big program, ask
+   someone who can read the code.
+4. Now try the same five questions on `open-meteo`, with what you saw in Part 3. Which ones can you
+   answer? Which ones need its code?
 
 #### Step 2 - Watch the facilitator's example
 
-The facilitator shows, on the big screen, a web page that hides a sentence for AI assistants. Watch
-what the chatbot does with it, then discuss: who wrote this sentence, and who read it?
+Everything the model reads enters the context with the same weight as your question: a document, a
+web page, what a tool sends back. So a text can carry instructions that nobody wrote in your
+`AGENTS.md`, and the person who uses the chatbot may see nothing of them.
+
+The facilitator shows this on the big screen, with a web page that hides one sentence for AI
+assistants (white text on a white background, in a very small size), and asks the chatbot to
+summarise it.
+
+1. Read the answer. Does the chatbot say that the page hides something?
+2. The facilitator opens the file in the editor, and the sentence appears. Read what it asks. Did
+   the chatbot do it?
+3. Discuss: who wrote this sentence, who read it, and what else could it ask?
+
+In our test on 2026-10-30, the chatbot did not follow the sentence, with Claude Code or with
+OpenCode. OpenCode pointed it out, Claude Code said nothing about it. One try proves little: a
+cleverer sentence, or a smaller model, may obey. The rules of a chatbot are not a lock.
 
 #### Step 3 - Fill in the entry of your territory
 
@@ -451,8 +524,10 @@ what the chatbot does with it, then discuss: who wrote this sentence, and who re
    Barcelona, Antwerp, Naples), fill in its entry as you did for Antwerp in Part 2: `status`,
    `source_says`, and `level` and `advice` only if the status is `"live"`.
 2. If your territory is not in the file, copy one entry, paste it after the last one, put a comma
-   between the two, and change its name, `scale`, `source` and `season` to those of your territory
-   (delete the `season` line, with its comma, if you don't know it).
+   between the two, and change its name, `scale` (the levels that the authority uses, in the words
+   of the source), `source` and `season` to those of your territory. If you don't know `scale`,
+   write `TO BE COMPLETED`: the tool does not send it. If you don't know `season`, delete its line,
+   with its comma.
 3. Check that `"date"` is still today's, and save.
 4. Type `workshop D` and ask: `What is the fire danger level today in <your territory>?` Press
    **Ctrl+O** to see what the tool sent back (**Ctrl+O** again to come back): does the answer name
@@ -480,6 +555,12 @@ cannot read, that can write files and send messages, for a chatbot used by young
 
 ## Part 5 - Closing (15 min)
 
+**Goal**: see what the tools changed in the score of your chatbot, and save your work.
+
+Three questions matter today. Question 8 asks for today's level, which no document holds. Questions
+11 and 12 are in what you added in workshop 3, the document of Benevento and the page of your
+territory: they check that the chatbot can still find them when it also has tools.
+
 ### Step 1 - Replay and score column D
 
 1. **Predict** on paper: which of questions 8, 11 and 12 will go up from column C to column D?
@@ -491,8 +572,7 @@ cannot read, that can write files and send messages, for a chatbot used by young
 
    Under each answer, the line `What the model did:` lists what it read and searched, and the tools
    it called, for example `called the MCP tool fire_danger`. In our test on 2026-10-30, with the 11
-   questions of the kit (no question 12): 1 min 54 and $0.24. Other ways to pay for the model:
-   [OpenCode guide, five ways to pay for the model](https://github.com/Youth-AI-Lab/yal-opencode-guide#before-you-start-five-ways-to-pay-for-the-model).
+   questions of the kit (no question 12): 1 min 54 and $0.24.
 3. Score only the three questions of today, with the help of the judge (no question 12:
    `score D 8 11`):
 
@@ -517,7 +597,7 @@ cannot read, that can write files and send messages, for a chatbot used by young
 
    If your computer already has a `my-work.zip`, the new one may be called `my-work (1).zip`:
    bring the newest.
-2. Answer on the card of the facilitator, alone, in a few words:
+2. Take a blank card or a half sheet from the facilitator. This is your **exit card**. Answer alone, in a few words:
    1. Why can only a tool give today's fire danger level?
    2. What can a server do in your Codespace, and how do you check it before you plug it in?
    3. What is the difference between a weather forecast and the official fire danger level?
@@ -533,11 +613,17 @@ The common problems (key, Codespace, terminal) are in the
 [Troubleshooting of SETUP.md](SETUP.md#troubleshooting).
 
 **`fire-danger.json is malformed (Expecting ',' delimiter: line … column …). Fix it and try again.`** -
-A comma or a quote is missing in `mcp/fire-danger.json`. Go to the line given in the message and
-look for the red underline in the editor. A missing comma is usually at the end of the line just
-above it. Fix it, and save. You don't need to restart the conversation.
+A comma or a quote is missing in `mcp/fire-danger.json`. The file name turns red, with the number
+of problems next to it. Go to the line given in the message, look for the red wavy line in the
+editor and put the mouse on it: VS Code says what is missing (here: `Expected comma`). A missing
+comma is usually at the end of the line just above it. Fix it, and save. You don't need to restart
+the conversation.
 
 ![The detailed view after Ctrl+O. The tool fire_danger sent back: fire-danger.json is malformed (Expecting ',' delimiter: line 41 column 7 (char 3315)). Fix it and try again.](images/mcp-malformed.png)
+
+![VS Code with mcp/fire-danger.json open, a comma missing at the end of line 40. 1: the file name fire-danger.json in red in the file list, with 1, M on the right. 2: the tab of the file, in red too. 3: the red wavy underline under "scale", at the start of line 41.](images/json-error.png)
+
+![The message that VS Code shows when the mouse is on the red wavy line: Expected comma.](images/json-error-hover.png)
 
 **The tool says "The file is dated …, not today".** - Write today's date in `"date"`, at the top of
 the file, in the form year-month-day, and save.

@@ -34,9 +34,10 @@ Full page: [README.md](README.md). Setup and common problems: [SETUP.md](SETUP.m
 2. `workshop D`: `Has the Pla Alfa map of Catalonia already had its morning update today?` → **Ctrl+O**:
    was `time` called? Then the same, starting with `Use the time tool:`. `Ctrl+C` twice.
 3. `WORKSHOP_WEATHER=1 workshop D`, then `/mcp`: `open-meteo   17 tools` (the model gets 2).
-4. `Will it be windy tomorrow in La Rochelle?` → **Ctrl+O**: what was sent to Open-Meteo?
+4. `Will it be windy tomorrow in La Rochelle?` → **Ctrl+O**: what was sent to Open-Meteo? Look at
+   the gauge now.
 5. `Given the weather, what is the fire danger level today in La Rochelle?`: weather ≠ official level.
-   Look at the gauge. `Ctrl+C` twice.
+   `Ctrl+C` twice.
 
 ## 4. Read before you install (25 min)
 
