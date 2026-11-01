@@ -403,7 +403,7 @@ WORKSHOP_WEATHER=1 workshop D
 1. Type `/mcp`: you should see a third server, `✔ open-meteo   17 tools`. The workshop shows the
    model **only 2 of them** (the forecast, and the search of a place by its name): the
    descriptions of the 17 tools take about 112,000 characters, 2 of them about 12,000 (on average,
-   4 characters of English text make a token). Press **Esc**.
+   4 characters of English text make a [token](https://github.com/Youth-AI-Lab/yal-local-ai-guide/blob/main/how-an-llm-works.md#what-a-token-really-is)). Press **Esc**.
    The workshop allows these two tools too: the model calls them without asking you, and what it
    sends to them leaves the Codespace.
 2. Ask:
