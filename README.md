@@ -124,11 +124,24 @@ second terminal.
 
 > 💡 **If you use OpenCode.** Same commands, after `workshop-login --engine opencode`. Mode D gives
 > OpenCode the same tools. It asks you before every command it wants to run in the terminal and
-> every file it writes, but not before it calls one of these tools. With an OpenRouter key
-> (`sk-or-`), the conversation goes through OpenRouter to the company of the model you chose, which
-> may not be Anthropic. The judge of `score` then does not work: it needs an Anthropic key, so you
-> score alone. Other ways to pay for the model:
+> every file it writes, but not before it calls one of these tools. Other ways to pay for the model:
 > [OpenCode guide, five ways to pay for the model](https://github.com/Youth-AI-Lab/yal-opencode-guide#before-you-start-five-ways-to-pay-for-the-model).
+
+> 💡 **If your key starts with `sk-or-` (OpenRouter).** Paste it in `workshop-login`, with no option:
+> the key chooses OpenCode. The conversation goes through OpenRouter to a company that runs the model
+> you chose, which may not be Anthropic, and `score` uses OpenRouter too. Compare your own columns
+> only: `score` writes the model under the table, and warns when two columns used different models.
+> The chatbot figures of this page (cost, time, gauge, scores) were measured with Claude, not with
+> this model.
+
+> ⚠️ **Important.** **With young people and an OpenRouter key**, zero-data-retention models hosted in
+> Europe must be on. Zero data retention: the company says it stores nothing, and OpenRouter does not
+> guarantee it. Turn on the switches in your [privacy settings](https://openrouter.ai/settings/privacy)
+> and choose **Zero retention only** (not tested). Europe is not a switch: it needs a Business or
+> Enterprise plan, and the workshop commands cannot do it yet. No setting lifts OpenRouter's rule: "You
+> must be at least 18 years of age to use the Service." Read
+> [OpenRouter guide, Part 8](https://github.com/Youth-AI-Lab/yal-openrouter-guide#part-8---data-and-young-people)
+> before any session with young people.
 
 > ℹ️ **No Codespace?** The same repository opens on your own computer, with Docker and VS Code: see
 > the [dev containers guide](https://github.com/Youth-AI-Lab/yal-devcontainer-guide).
@@ -203,10 +216,10 @@ flowchart LR
 ```
 
 **What happens during a tool call.** The model does not run in your Codespace: it runs at
-Anthropic. Claude Code, the program in your terminal, sends it your question and the descriptions
-of the tools. When the model wants a tool, it answers with the name of the tool and what to ask it.
-Claude Code passes this to the server, in your Codespace, then sends what came back to the model,
-which writes its answer.
+Anthropic, or at a company reached through OpenRouter. Claude Code or OpenCode, the program in your
+terminal, sends it your question and the descriptions of the tools. When the model wants a tool, it
+answers with the name of the tool and what to ask it. The program passes this to the server, in your
+Codespace, then sends what came back to the model, which writes its answer.
 
 **Key insight:** mode D is mode C plus tools. The model now has two ways to find an answer: read
 the documents, or call a tool. What a tool sends back enters the context exactly like a document
@@ -340,7 +353,8 @@ then run, in your Codespace, a program that someone else wrote.
 | `open-meteo` | a volunteer (its code is public) | the Open-Meteo service, on the internet | the place and the coordinates the model asks about |
 
 And for all three: what the tool sends back enters the context, so it goes to the company of the
-model (Anthropic) with your question, like everything in the conversation.
+model (Anthropic, or a company reached through OpenRouter) with your question, like everything in
+the conversation.
 
 **Key insight:** a server is a program that runs in your Codespace with your rights. What it can
 do, and what it sends away, is written in its code and in how it is started, not in its name.
