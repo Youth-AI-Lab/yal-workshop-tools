@@ -18,6 +18,7 @@ Full page: [README.md](README.md). Setup and common problems: [SETUP.md](SETUP.m
    between quotes). Terminal 1: `workshop-start 4 --from my-work.zip` → check the `saved on` date
    (no save: `workshop-start 4`).
 5. First `workshop D`: **down arrow** → `Yes, I trust this folder` → Enter (closed? type it again).
+6. Terminal 2: `openwebui start` (a few minutes; do not wait, go on with Part 2).
 
 ## 2. Our tool (20 min)
 
@@ -54,10 +55,12 @@ Full page: [README.md](README.md). Setup and common problems: [SETUP.md](SETUP.m
 1. Predict: which of 8, 11, 12 go up from C to D? `replay D`, then `score D 8 11 12` (no
    question 12: `score D 8 11`). No C score for 8? `score C 8`. Compare the rows with column C, not
    the Total (no save: with a neighbouring pair).
-2. `workshop-save` → right-click on `my-work.zip` → **Download...**. Bring it to [workshop 5](https://github.com/Youth-AI-Lab/yal-workshop-wiki). If your
+2. Terminal 2: `openwebui chatbot --name "<your chatbot>"` → in Open WebUI, question 8: click
+   **View Result from fire-danger_fire_danger**, the same tool as in mode D, read-only.
+3. `workshop-save` → right-click on `my-work.zip` → **Download...**. Bring it to [workshop 5](https://github.com/Youth-AI-Lab/yal-workshop-wiki). If your
    computer already has one, the new one may be called `my-work (1).zip`: bring the newest.
-3. Exit card: three answers, alone.
+4. Exit card: three answers, alone.
 
 **Never make up a level**: only what the official source says, on the day. **Leave a
 conversation:** `Ctrl+C` twice. **Copy / paste in the terminal:** `Ctrl+Shift+C` / `Ctrl+Shift+V`
-(`Cmd+C` / `Cmd+V` on a Mac).
+(`Cmd+C` / `Cmd+V` on a Mac). **Never make port 3000 public.**

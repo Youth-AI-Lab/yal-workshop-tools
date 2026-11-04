@@ -114,7 +114,8 @@ All of these are in your Codespace, in the file list on the left:
 
 ## Part 1 - Welcome (20 min)
 
-**Goal**: open the Codespace of this workshop, and bring back your work.
+**Goal**: open the Codespace of this workshop, bring back your work, and start Open WebUI for the
+closing.
 
 ### Step 1 - Open your Codespace and save your key
 
@@ -169,7 +170,27 @@ second terminal.
 > `Yes, I trust this folder`, then **Enter**. If Claude Code closed, type `workshop D` again. More in
 > [SETUP.md, step 4](SETUP.md#step-4---your-first-conversation).
 
-> 💡 **Tip.** **Checkpoint**: `Key OK`, then `Ready for workshop 4`.
+### Step 3 - Start Open WebUI in the background
+
+At the closing, you will see your chatbot in Open WebUI, with the same tool as in mode D. Its first
+start takes a few minutes: start it now.
+
+1. In your second terminal, type:
+
+   ```bash
+   openwebui start
+   ```
+
+2. Do not wait for it: go on with Part 2 in your first terminal. It ends with
+   `Open WebUI is ready, …`. On the way, near the start, a line says
+   `Live tool ready: fire-danger (fire_danger, territories), read-only.`
+
+> 🚫 **Warning.** **Never make port 3000 public** (Ports tab, Port Visibility). It is the numbered
+> door through which you reach Open WebUI. This Open WebUI has no accounts: anyone with the link
+> could use your key.
+
+> 💡 **Tip.** **Checkpoint**: `Key OK`, `Ready for workshop 4`, and `openwebui start` running in the
+> second terminal.
 
 ---
 
@@ -599,7 +620,8 @@ and they use public sources only.
 
 ## Part 5 - Closing (15 min)
 
-**Goal**: see what the tools changed in the score of your chatbot, and save your work.
+**Goal**: see what the tools changed in the score of your chatbot, see the same tool in Open WebUI,
+and save your work.
 
 Three questions matter today. Question 8 asks for today's level, which no document holds. Questions
 11 and 12 are in what you added in workshop 3, the document of Benevento and the page of your
@@ -632,7 +654,43 @@ territory: they check that the chatbot can still find them when it also has tool
    `score C 8`: your answers of workshop 3 are still in `answers/`. Without a save, there is no
    column C: compare with a neighbouring pair.
 
-### Step 2 - Save your work, fill in the exit card
+### Step 2 - Your chatbot in Open WebUI, with its tool
+
+Mode D is in your terminal. The same tool can go into a chatbot that other people use through a
+web page: here, Open WebUI.
+
+1. In your second terminal, check that Open WebUI is ready, then type, with the name of your
+   chatbot:
+
+   ```bash
+   openwebui chatbot --name "Feurisson"
+   ```
+
+   **What you should see**, near the end:
+
+   ```
+   "Feurisson chatbot" has the live tool of mcp/, as in mode D: fire_danger (today's level, read from mcp/fire-danger.json) and territories. Read-only. Under the message box, the wrench icon shows it.
+   Ready. In Open WebUI (…): New Chat, then choose "Feurisson chatbot" in the message box (bottom right).
+   ```
+
+2. Open the address, **New Chat**, choose your chatbot, and ask question 8. If the model calls the
+   tool, a line **View Result from fire-danger_fire_danger** appears above the answer. Click it: it
+   shows what the tool sent back, as **Ctrl+O** did in mode D. Does the answer give the same level,
+   or the same reason why there is none, as in your `answers/D-…` file?
+3. Ask the same question for your territory.
+
+> ℹ️ **Note.** **What this tool can do in Open WebUI.** It has the same two tools, `fire_danger` and
+> `territories`, and nothing else: not the time server, not the weather. It only reads
+> `mcp/fire-danger.json`, a file filled in from public sources, with no personal data. It cannot
+> write anything, and it has no way out to the internet. It reads the file at each call: if the file
+> is not dated today, it sends back `why_no_level`, as in Part 2. We tried it with a test model, not
+> with Claude: whether Claude calls the tool for question 8 in Open WebUI is not measured.
+
+> ℹ️ **Note.** A chatbot made with `--rag` (workshop 2) gets no tool: Open WebUI picks its excerpts
+> before each answer, and it calls nothing. The tool is not in the file of
+> `chatbot-export` either (workshop 5): it is a program, not a document.
+
+### Step 3 - Save your work, fill in the exit card
 
 1. Type `workshop-save`, then right-click on `my-work.zip` → **Download...**. It holds your
    `fire-danger.json` and everything before. Bring it to workshop 5.
@@ -684,6 +742,18 @@ fines) is answered from the documents, not by the tool.
 
 **`WORKSHOP_WEATHER=1 works with modes D, E and F only.`** - Type `WORKSHOP_WEATHER=1 workshop D`,
 not with another mode.
+
+**`! The live tool fire-danger could not start, so your chatbot answers without it.`** - The lines
+under it give the end of the error. If you changed `mcp/fire_danger_server.py`, undo your change.
+Then type `openwebui start` again: it keeps your chatbots and documents.
+
+**`openwebui chatbot` says `It is not running now: type openwebui start.`** - The chatbot was made,
+with its tool, but the tool did not start. Type `openwebui start`: the tool comes back, and the
+chatbot keeps it.
+
+**In Open WebUI, the chatbot never shows `View Result from fire-danger_fire_danger`.** - Check that
+you chose `Feurisson chatbot` (with the name of yours), not one that ends with `(RAG)` and not a
+"Wildfire RAG": they have no tool. Then see "The model does not call the tool", above.
 
 ---
 
