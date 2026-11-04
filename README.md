@@ -330,8 +330,11 @@ filled in. **Who is responsible for the level that the chatbot gives?**
 **Goal**: use two servers that other people wrote, read how they are plugged in, and see what each
 one sends away and what it costs in the context.
 
-Many servers already exist, for a calendar, a database, a website. Using one saves work, but you
-then run, in your Codespace, a program that someone else wrote.
+Many servers already exist, for a calendar, a database, a website, a map, a library catalogue.
+The MCP project keeps a list of examples and links to others
+([modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers)), and thousands
+more are listed elsewhere. It is a whole world to explore. Using one saves work, but you then run,
+in your Codespace, a program that someone else wrote.
 
 ### What you will discover
 
@@ -464,6 +467,14 @@ WORKSHOP_WEATHER=1 workshop D
 The model chose the place and the coordinates, and the weather server sent them to Open-Meteo.
 **What else could a server send, if you asked it about a young person's address?**
 
+**Tools can also be combined.** Each one alone can look harmless: a calendar says when, a map says
+where, a weather service says what the sky will be. One question can call all three, and the
+answer puts together where a person will be, and when. Crossing data has never been so easy.
+European law on personal data (the GDPR, and in France the *Informatique et Libertés* law) asks
+that personal data be collected for a stated purpose, and not used for another one
+([GDPR, Article 5](https://eur-lex.europa.eu/eli/reg/2016/679/oj)). A chatbot with tools can cross
+data in a few seconds, without anyone deciding it: ask yourself what each tool adds to the others.
+
 ---
 
 ## Part 4 - Read before you install, and give your source (★★★, 25 min)
@@ -566,6 +577,27 @@ cleverer sentence, or a smaller model, may obey. The rules of a chatbot are not 
 
 You answered five questions before trusting a server of about 160 lines. **Would you plug in a server you
 cannot read, that can write files and send messages, for a chatbot used by young people?**
+
+### What the workshop set up for you, and why
+
+You did not set these guardrails today, but each one is there for a reason:
+
+- **No level without today's file.** `fire-danger` gives a level only if its file is dated today and
+  the status is `live`. Otherwise it says why (`why_no_level`, Part 2): an old level would look
+  like a fresh one.
+- **Two tools out of 17.** The weather server has 17 tools; the workshop shows the model only 2.
+  Fewer tools means less text in the context, and fewer things the model can do.
+- **These tools allowed in advance, not the others.** In mode D, the model calls these tools without
+  asking you, because they only read. A server you add yourself to `.mcp.json` is asked at each
+  call, and writing a file still needs your yes.
+- **An empty settings file.** The weather server could read a settings file (`.env`) from the folder
+  it starts in. The workshop gives it an empty one, so that a file left in the folder cannot change
+  what it does.
+- **Fixed versions.** The time and weather servers come with the image of the Codespace, in the
+  version that was read: they do not update by themselves.
+
+**With young people**, keep to tools like these: they only read, they ask for no personal data,
+and they use public sources only.
 
 > **You built** the entry of your territory in a live tool, with its source. **Reused in** any chatbot
 > that uses tools: in OpenCode, [the fire-danger example and how to fill in today's level](https://github.com/Youth-AI-Lab/yal-opencode-guide#fill-in-todays-level),
