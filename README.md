@@ -127,19 +127,11 @@ second terminal.
 > every file it writes, but not before it calls one of these tools. Other ways to pay for the model:
 > [OpenCode guide, five ways to pay for the model](https://github.com/Youth-AI-Lab/yal-opencode-guide#before-you-start-five-ways-to-pay-for-the-model).
 
-> 💡 **If your key starts with `sk-or-` (OpenRouter).** Paste it in `workshop-login`, with no option:
-> the key chooses OpenCode. The conversation goes through OpenRouter to a company that runs the model
-> you chose, which may not be Anthropic, and `score` uses OpenRouter too. Compare your own columns
-> only: `score` writes the model under the table, and warns when two columns used different models.
-> The chatbot figures of this page (cost, time, gauge, scores) were measured with Claude, not with
-> this model.
-
-> ⚠️ **Important.** **With young people and an OpenRouter key**, type `workshop-login --europe`.
-> Requests then go only to Mistral, hosted in Europe, with zero data retention (it says it stores nothing).
-> The default model is `mistralai/mistral-small-2603`. OpenRouter itself may still handle them elsewhere. The
-> setting does not lift OpenRouter's 18+ rule (its support chat reads it as: no young person creates or uses their own key; this is not in its terms, so keep every key with the adults) or section 5.2 of its terms, and flagged content may
-> be kept. Read [OpenRouter guide, Part 8](https://github.com/Youth-AI-Lab/yal-openrouter-guide#part-8---data-and-young-people)
-> before any session with young people.
+> 💡 **If your key starts with `sk-or-` (OpenRouter).** Paste it in `workshop-login`, with no option,
+> and read [SETUP.md, With an OpenRouter key](SETUP.md#with-an-openrouter-key): the conversation goes
+> through OpenRouter to a company that runs the model, which may not be Anthropic. Before anything
+> that young people wrote goes through OpenRouter, read
+> [Young people and OpenRouter](SETUP.md#young-people-and-openrouter).
 
 > ℹ️ **No Codespace?** The same repository opens on your own computer, with Docker and VS Code: see
 > the [dev containers guide](https://github.com/Youth-AI-Lab/yal-devcontainer-guide).
