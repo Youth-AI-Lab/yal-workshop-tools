@@ -558,9 +558,14 @@ summarise it.
    the chatbot do it?
 3. Discuss: who wrote this sentence, who read it, and what else could it ask?
 
+<details>
+<summary>After the discussion: what happened in our test</summary>
+
 In our test on 2026-10-30, the chatbot did not follow the sentence, with Claude Code or with
 OpenCode. OpenCode pointed it out, Claude Code said nothing about it. One try proves little: a
 cleverer sentence, or a smaller model, may obey. The rules of a chatbot are not a lock.
+
+</details>
 
 #### Step 3 - Fill in the entry of your territory
 
@@ -576,7 +581,12 @@ cleverer sentence, or a smaller model, may obey. The rules of a chatbot are not 
 4. Type `workshop D` and ask: `What is the fire danger level today in <your territory>?` Press
    **Ctrl+O** to see what the tool sent back (**Ctrl+O** again to come back): does the answer name
    your source?
-5. Leave with **Ctrl+C twice**.
+5. Now see a question that the chatbot must ask you. Still in `workshop D`, ask:
+   `Add a field "checked_by" with our names to the entry of <your territory> in mcp/fire-danger.json.`
+   Claude Code stops before writing: a frame **Edit file** with the lines it would change, and
+   `Do you want to make this edit to fire-danger.json?`. Choose **3. No**: nothing changes. The
+   tool `fire_danger` did not ask you, because it only reads; a change to a file waits for your yes.
+6. Leave with **Ctrl+C twice**.
 
 > ℹ️ **Note.** **No official daily level in your territory?** Some authorities publish no level out of
 > season, or only for the services. Then write `"no-level-shown"` or `"season-over"`, with the
@@ -602,7 +612,7 @@ You did not set these guardrails today, but each one is there for a reason:
   Fewer tools means less text in the context, and fewer things the model can do.
 - **These tools allowed in advance, not the others.** In mode D, the model calls these tools without
   asking you, because they only read. A server you add yourself to `.mcp.json` is asked at each
-  call, and writing a file still needs your yes.
+  call, and writing a file still needs your yes (item 5 of Step 3 above).
 - **An empty settings file.** The weather server could read a settings file (`.env`) from the folder
   it starts in. The workshop gives it an empty one, so that a file left in the folder cannot change
   what it does.
@@ -613,7 +623,9 @@ You did not set these guardrails today, but each one is there for a reason:
 and they use public sources only.
 
 > **You built** the entry of your territory in a live tool, with its source. **Reused in** any chatbot
-> that uses tools: in OpenCode, [the fire-danger example and how to fill in today's level](https://github.com/Youth-AI-Lab/yal-opencode-guide#fill-in-todays-level),
+> that uses tools: first your chatbot in Open WebUI, with the same tool
+> ([Part 5, Step 2](#step-2---your-chatbot-in-open-webui-with-its-tool)). Another way, without
+> Claude Code: in OpenCode, [the fire-danger example and how to fill in today's level](https://github.com/Youth-AI-Lab/yal-opencode-guide#fill-in-todays-level),
 > and the checks of [Other MCP servers](https://github.com/Youth-AI-Lab/yal-opencode-guide#other-mcp-servers).
 
 ---
@@ -683,8 +695,10 @@ web page: here, Open WebUI.
 > `territories`, and nothing else: not the time server, not the weather. It only reads
 > `mcp/fire-danger.json`, a file filled in from public sources, with no personal data. It cannot
 > write anything, and it has no way out to the internet. It reads the file at each call: if the file
-> is not dated today, it sends back `why_no_level`, as in Part 2. We tried it with a test model, not
-> with Claude: whether Claude calls the tool for question 8 in Open WebUI is not measured.
+> is not dated today, it sends back `why_no_level`, as in Part 2. With Claude, in one try, the
+> chatbot called the tool for question 8 and gave no level, because the file was not dated today.
+> With a small local model (qwen3:8b), the first call after Open WebUI started got no answer, once
+> in three tries: ask again.
 
 > ℹ️ **Note.** A chatbot made with `--rag` (workshop 2) gets no tool: Open WebUI picks its excerpts
 > before each answer, and it calls nothing. The tool is not in the file of
