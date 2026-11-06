@@ -626,7 +626,9 @@ and they use public sources only.
 
 > **You built** the entry of your territory in a live tool, with its source. **Reused in** any chatbot
 > that uses tools: first your chatbot in Open WebUI, with the same tool
-> ([Part 5, Step 2](#step-2---your-chatbot-in-open-webui-with-its-tool)). Another way, without
+> ([Part 5, Step 2](#step-2---your-chatbot-in-open-webui-with-its-tool)); with a group, the
+> [Open WebUI guide](https://github.com/Youth-AI-Lab/yal-openwebui-guide#step-5---add-the-live-tool-todays-fire-danger),
+> where the facilitator fills in the file on the day. Another way, for adults, without
 > Claude Code: in OpenCode, [the fire-danger example and how to fill in today's level](https://github.com/Youth-AI-Lab/yal-opencode-guide#fill-in-todays-level),
 > and the checks of [Other MCP servers](https://github.com/Youth-AI-Lab/yal-opencode-guide#other-mcp-servers).
 
@@ -705,6 +707,14 @@ web page: here, Open WebUI.
 > ℹ️ **Note.** A chatbot made with `--rag` (workshop 2) gets no tool: Open WebUI picks its excerpts
 > before each answer, and it calls nothing. The tool is not in the file of
 > `chatbot-export` either (workshop 5): it is a program, not a document.
+
+> ℹ️ **Note.** **With young people.** This Open WebUI has no accounts: it is for your pair only,
+> never for a group. For a group, the same tool is in the
+> [Open WebUI guide, Step 5 - Add the live tool](https://github.com/Youth-AI-Lab/yal-openwebui-guide#step-5---add-the-live-tool-todays-fire-danger),
+> from version 2026.11.8 of the Codespace image. There, the facilitator fills in
+> `mcp/fire-danger.json` on the morning of each session, from the public source, and ticks the tool
+> in each chatbot that should use it; the participants only chat. That guide's Codespace has its own
+> file: your entry of today does not go there by itself.
 
 ### Step 3 - Save your work, fill in the exit card
 
