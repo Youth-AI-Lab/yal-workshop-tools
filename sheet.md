@@ -48,7 +48,8 @@ Full page: [README.md](README.md). Setup and common problems: [SETUP.md](SETUP.m
 4. `mcp/fire-danger.json`: the entry of your territory (or a copy of one entry, with its own name,
    `scale`, `source` and `season`), with its source.
 5. `workshop D`: `What is the fire danger level today in <your territory>?` → **Ctrl+O**: your source?
-   `Ctrl+C` twice.
+6. Still in `workshop D`: `Add a field "checked_by" with our names to the entry of <your territory> in mcp/fire-danger.json.`
+   → frame **Edit file** → **3. No**: nothing changes (a file change waits for your yes). `Ctrl+C` twice.
 
 ## 5. Closing (15 min)
 

@@ -77,7 +77,9 @@ no level.
   Only an official source can answer, on the day.
 - **Part 4** is a question to ask before any activity with a chatbot that uses tools: what does it
   send outside, and who reads it?
-- The same tools can be plugged into an OpenCode chatbot: see the
+- **Part 5** puts the same tool into your chatbot in Open WebUI, read-only, with public sources
+  only ([Part 5, Step 2](#step-2---your-chatbot-in-open-webui-with-its-tool)). Another way, for
+  adults, without Claude Code: the
   [OpenCode guide, Part 6 - Tools with MCP](https://github.com/Youth-AI-Lab/yal-opencode-guide#part-6---tools-with-mcp).
 
 The series goes on, one piece of the chatbot at a time:
